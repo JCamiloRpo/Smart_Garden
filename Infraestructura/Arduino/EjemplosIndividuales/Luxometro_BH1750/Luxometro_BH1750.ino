@@ -19,5 +19,5 @@ void loop() {
   Serial.print("Luz(iluminancia):  ");
   Serial.print(lux);
   Serial.println(" lx");
-  delay(1000);
+  delay(2000);
 }
