@@ -1,3 +1,5 @@
+//usando https://theorycircuit.com/veml6070-uv-sensor-arduino-interface/
+// informacion http://arduinolearning.com/code/veml6070-ultraviolet-light-sensor-and-arduino-example.php
 #include <Wire.h>
 #include "Adafruit_VEML6070.h"
 
