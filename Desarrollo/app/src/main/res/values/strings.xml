@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">SmartGarden</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="logo">Logo</string>
+    <string name="title_activity_login">Inicio de sesión</string>
+    <string name="usuario">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="registro">¿Aun no se ha registrado?</string>
+    <string name="recuperar">¿Olvidaste tu contraseña?</string>
+    <string name="nombre">Nombre</string>
+    <string name="correo">Correo</string>
+    <string name="registrarse">Registrarse</string>
+</resources>
