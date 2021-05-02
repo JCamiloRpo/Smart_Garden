@@ -6,81 +6,93 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.LoginActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="124dp"
-        tools:layout_editor_absoluteY="162dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/ImgLogo"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_margin="20dp"
-            android:contentDescription="@string/logo"
-            android:src="@drawable/ic_launcher_foreground" />
-
-        <EditText
-            android:id="@+id/TxtUsuario"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="10dp"
-            android:ems="10"
-            android:hint="@string/usuario"
-            android:inputType="textPersonName"
-            android:autofillHints="" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/TxtPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="10dp"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/password"
-            android:inputType="textPassword" />
+            <ImageView
+                android:id="@+id/ImgLogo"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginBottom="40dp"
+                android:contentDescription="@string/logo"
+                android:src="@drawable/logo" />
 
-        <TextView
-            android:id="@+id/TxtRegistro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:singleLine="false"
-            android:text="@string/registro"
-            android:textAllCaps="false"
-            android:textColor="#000000" />
+            <EditText
+                android:id="@+id/TxtUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/usuario"
+                android:inputType="textPersonName" />
 
-        <TextView
-            android:id="@+id/TxtRecuperar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:gravity="center"
-            android:singleLine="false"
-            android:text="@string/recuperar"
-            android:textAllCaps="false"
-            android:textColor="#000000" />
+            <EditText
+                android:id="@+id/TxtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
 
-        <Button
-            android:id="@+id/BtnIngresar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="40dp"
-            android:backgroundTint="@color/black"
-            android:gravity="center"
-            android:padding="15dp"
-            android:text="@string/ingresar"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            app:cornerRadius="40dp"/>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/TxtRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:singleLine="false"
+                android:text="@string/registro"
+                android:textAllCaps="false"
+                android:textColor="#4A4A4A"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/TxtRecuperar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:gravity="center"
+                android:singleLine="false"
+                android:text="@string/recuperar"
+                android:textAllCaps="false"
+                android:textColor="#4A4A4A"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/BtnIngresar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="70dp"
+                android:backgroundTint="@color/green_light"
+                android:gravity="center"
+                android:padding="15dp"
+                android:text="@string/ingresar"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:cornerRadius="40dp"
+                app:strokeWidth="2dp" />
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
