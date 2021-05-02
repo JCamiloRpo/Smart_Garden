@@ -21,26 +21,40 @@ public class ConexionSQLite {
 
     /**
      * Metodos inserts sobrecargados para guardar registros
-     * @param usuario el registro a guardar
+     * @param item el registro a guardar
      * @return el id del registro
      */
-    public long insert(Usuario usuario){
+    public long insert(Usuario item){
         db = conn.getWritableDatabase();
-        long result = db.insert(TABLE_USUARIO, null, usuario.toContentValues());
+        long result = db.insert(TABLE_USUARIO, null, item.toContentValues());
         db.close();
         return result;
     }
 
     /**
      * Metodos inserts sobrecargados para guardar registros
-     * @param sesion el registro a guardar
+     * @param item el registro a guardar
      * @return el id del registro
      */
-    public long insert(Sesion sesion){
+    public long insert(Sesion item){
         db = conn.getWritableDatabase();
-        long result = db.insert(TABLE_SESION, null, sesion.toContentValues());
+        long result = db.insert(TABLE_SESION, null, item.toContentValues());
         db.close();
         return result;
+    }
+
+    /**
+     * Metodos utilizados para actualizar la BD
+     * @param item registro con los datos nuevos
+     * @param id del registro a actualizar
+     * @return el resultado de la operacion en la BD
+     */
+    public int update(Usuario item, long id){
+        db = conn.getWritableDatabase();
+        db.setForeignKeyConstraintsEnabled(true);
+        int resul = db.update(TABLE_USUARIO,item.toContentValues(),"ID = ?",new String[]{String.valueOf(id)});
+        db.close();
+        return resul;
     }
 
     /**
