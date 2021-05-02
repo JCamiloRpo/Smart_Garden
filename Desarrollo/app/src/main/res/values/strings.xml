@@ -23,4 +23,6 @@
     <string name="title_shops">Compras</string>
     <string name="descripcion">"Vamos a conectarnos con lo natural, con la magia de los procesos y la oportunidad de tenerlos en nuestras manos"</string>
     <string name="desde_2021">- Desde 2021 -</string>
+    <string name="icono_notificacion">Icono notificacion</string>
+    <string name="titulo_notificacion">Titulo notificacion</string>
 </resources>
