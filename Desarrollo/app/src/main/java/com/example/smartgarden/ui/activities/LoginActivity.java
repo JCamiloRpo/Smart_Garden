@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), RegistroActivity.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -57,14 +58,18 @@ public class LoginActivity extends AppCompatActivity {
                             HomeFragment.usuarioID = Long.parseLong(reg[0][0]);
                             HomeFragment.usuario = usuario;
 
-                            SplashActivity.sql.insert(new Sesion(Long.parseLong(reg[0][0]), usuario));
+                            SplashActivity.sesionID = SplashActivity.sql.insert(new Sesion(Long.parseLong(reg[0][0]), usuario));
 
                             Intent i = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(i);
                             finish();
                         }
+                        else
+                            Toast.makeText(getApplicationContext(), "Usuario y/o contraseña incorrecto.", Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(getApplicationContext(), "Usuario y/o contraseña incorrecto.", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getApplicationContext(), "Usuario y/o contraseña incorrecto.", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });

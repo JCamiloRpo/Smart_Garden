@@ -27,6 +27,13 @@ public class RegistroActivity extends AppCompatActivity {
         setUpView();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(i);
+        finish();
+    }
+
     private void setUpView(){
         txtNombre = findViewById(R.id.TxtNombreR);
         txtUsuario = findViewById(R.id.TxtUsuarioR);
@@ -54,7 +61,7 @@ public class RegistroActivity extends AppCompatActivity {
                     HomeFragment.usuarioID = id;
                     HomeFragment.usuario = usuario;
 
-                    SplashActivity.sql.insert(new Sesion(id, usuario));
+                    SplashActivity.sesionID = SplashActivity.sql.insert(new Sesion(id, usuario));
 
                     Intent i = new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(i);

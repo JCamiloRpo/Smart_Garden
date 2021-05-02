@@ -1,5 +1,6 @@
 package com.example.smartgarden.ui.activities;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.example.smartgarden.R;

@@ -14,6 +14,7 @@ import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
     public static ConexionSQLite sql;
+    public static long sesionID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,9 @@ public class SplashActivity extends AppCompatActivity {
     private void setUp(){
         TimerTask tarea;
         String[][] reg = sql.read(ConexionSQLite.TABLE_SESION);
+        System.out.println(reg.length);
         if(reg.length>0){
+            sesionID = Long.parseLong(reg[0][0]);
             HomeFragment.usuarioID = Long.parseLong(reg[0][1]);
             HomeFragment.usuario = reg[0][2];
             tarea = new TimerTask() {
@@ -52,6 +55,6 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         Timer t = new Timer();
-        t.schedule(tarea, 5000);
+        t.schedule(tarea, 3000);
     }
 }
