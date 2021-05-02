@@ -4,10 +4,10 @@ import android.content.ContentValues;
 
 public class Usuario {
 
-    private int usuarioID;
+    private long usuarioID;
     private String nombre, usuario, password, correo;
 
-    public Usuario(int usuarioID, String nombre, String usuario, String password, String correo) {
+    public Usuario(long usuarioID, String nombre, String usuario, String password, String correo) {
         this.usuarioID = usuarioID;
         this.nombre = nombre;
         this.usuario = usuario;
@@ -22,7 +22,7 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public int getUsuarioID() { return usuarioID; }
+    public long getUsuarioID() { return usuarioID; }
 
     public String getNombre() { return nombre; }
 

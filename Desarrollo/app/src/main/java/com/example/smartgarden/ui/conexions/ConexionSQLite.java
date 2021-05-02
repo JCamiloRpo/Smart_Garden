@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.smartgarden.ui.entities.Usuario;
 
 public class ConexionSQLite {
-    public static final String TABLE_USUARIO = "Usuario";
+    public static final String TABLE_USUARIO = "tb_Usuario";
 
     private SQLiteHelper conn; //conexion a BD.
     private SQLiteDatabase db;

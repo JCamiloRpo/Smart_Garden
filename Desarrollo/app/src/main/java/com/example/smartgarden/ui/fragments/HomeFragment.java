@@ -15,12 +15,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.smartgarden.R;
 
 public class HomeFragment extends Fragment {
+    public static long usuarioID;
+    public static String usuario;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
-        textView.setText("Home");
+        textView.setText("Bienvenido "+usuarioID+"-"+usuario);
         return root;
     }
 }
