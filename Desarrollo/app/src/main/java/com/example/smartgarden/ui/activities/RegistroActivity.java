@@ -11,14 +11,12 @@ import android.widget.Toast;
 
 import com.example.smartgarden.R;
 import com.example.smartgarden.ui.conexions.ConexionSQLite;
+import com.example.smartgarden.ui.entities.Sesion;
 import com.example.smartgarden.ui.entities.Usuario;
 import com.example.smartgarden.ui.fragments.HomeFragment;
 
 public class RegistroActivity extends AppCompatActivity {
-    EditText txtNombre;
-    EditText txtUsuario;
-    EditText txtPassword;
-    EditText txtCorreo;
+    EditText txtNombre, txtUsuario, txtPassword, txtCorreo;
     Button btnRegistrar;
 
     @Override
@@ -55,6 +53,8 @@ public class RegistroActivity extends AppCompatActivity {
                     long id = SplashActivity.sql.insert(new Usuario(nombre, usuario, password, correo));
                     HomeFragment.usuarioID = id;
                     HomeFragment.usuario = usuario;
+
+                    SplashActivity.sql.insert(new Sesion(id, usuario));
 
                     Intent i = new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(i);

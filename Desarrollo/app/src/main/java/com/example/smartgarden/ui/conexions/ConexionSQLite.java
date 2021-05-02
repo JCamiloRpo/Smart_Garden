@@ -109,6 +109,7 @@ public class ConexionSQLite {
         String crear_tbSesion = "CREATE TABLE  "+TABLE_SESION+" (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "UsuarioID INTEGER, " +
+                "Usuario TEXT," +
                 "FOREIGN KEY (UsuarioID) REFERENCES " + TABLE_USUARIO+"(ID) ON DELETE CASCADE ON UPDATE CASCADE)";
 
         public SQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
