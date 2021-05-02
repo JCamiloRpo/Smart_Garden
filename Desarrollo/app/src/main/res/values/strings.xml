@@ -18,4 +18,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="editar_datos">Editar datos</string>
     <string name="cerrar_sesion">Cerrar sesión</string>
+    <string name="confirm_passw">Confirmar contraseña</string>
+    <string name="guardar_cambios">Guardar cambios</string>
 </resources>

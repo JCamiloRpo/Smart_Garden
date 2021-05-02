@@ -1,11 +1,10 @@
 package com.example.smartgarden.ui.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +13,11 @@ import android.widget.Button;
 
 import com.example.smartgarden.R;
 import com.example.smartgarden.ui.activities.LoginActivity;
-import com.example.smartgarden.ui.activities.MainActivity;
 import com.example.smartgarden.ui.activities.SplashActivity;
 import com.example.smartgarden.ui.conexions.ConexionSQLite;
 
 public class SettingsFragment extends Fragment {
-    Button btnCerrarS;
+    Button btnEditarD, btnCerrarS;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -34,6 +32,14 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setUpView(View v){
+        btnEditarD = v.findViewById(R.id.BtnEditarDatos);
+        btnEditarD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_settings_to_editarD);
+            }
+        });
+
         btnCerrarS = v.findViewById(R.id.BtnCerrarSesion);
         btnCerrarS.setOnClickListener(new View.OnClickListener() {
             @Override

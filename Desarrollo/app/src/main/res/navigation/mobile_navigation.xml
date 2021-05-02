@@ -23,6 +23,15 @@
     <fragment
         android:id="@+id/navigation_settings"
         android:name="com.example.smartgarden.ui.fragments.SettingsFragment"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settings_to_editarD"
+            app:destination="@id/editarDFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editarDFragment"
+        android:name="com.example.smartgarden.ui.fragments.EditarDFragment"
+        android:label="fragment_editard"
+        tools:layout="@layout/fragment_editard" />
 
 </navigation>
