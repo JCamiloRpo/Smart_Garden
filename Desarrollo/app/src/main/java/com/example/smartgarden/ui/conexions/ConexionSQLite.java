@@ -94,6 +94,20 @@ public class ConexionSQLite {
         return result;
     }
 
+    /**
+     * Metodo utilizado para eliminar registros en la BD
+     * @param table de donde de sea eliminar el registro
+     * @param id del registro a eliminar
+     * @return el resultado de la operacion en la BD
+     */
+    public int delete(String table, long id){
+        db = conn.getWritableDatabase();
+        db.setForeignKeyConstraintsEnabled(true);
+        int resul = db.delete(table, "ID = ?", new String[]{String.valueOf(id)});
+        db.close();
+        return resul;
+    }
+
     private class SQLiteHelper extends SQLiteOpenHelper {
 
         /* Como no existen el tipo de dato boolean, se utilizará el Integer donde 0 es false y 1 es true
