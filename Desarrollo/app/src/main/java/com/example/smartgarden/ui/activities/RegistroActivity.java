@@ -44,18 +44,24 @@ public class RegistroActivity extends AppCompatActivity {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nombre = txtNombre.getText().toString(), usuario = txtUsuario.getText().toString(),
-                        password = txtPassword.getText().toString(), correo = txtCorreo.getText().toString();
+                String nombre = txtNombre.getText().toString().trim(), usuario = txtUsuario.getText().toString().trim(),
+                        password = txtPassword.getText().toString().trim(), correo = txtCorreo.getText().toString().trim(),
+                        regex = "(?:[^<>()\\[\\].,;:\\s@\"]+(?:\\.[^<>()\\[\\].,;:\\s@\"]+)*|\"[^\\n\"]+\")@(?:[^<>()\\[\\].,;:\\s@\"]+\\.)+[^<>()\\[\\]\\.,;:\\s@\"]{2,63}";
+
                 if(nombre.equals(""))
                     Toast.makeText(getApplicationContext(), "Debe ingresar un nombre.", Toast.LENGTH_SHORT).show();
                 else if(usuario.equals(""))
                     Toast.makeText(getApplicationContext(), "Debe ingresar un usuario (con el iniciará sesión las proximas veces).", Toast.LENGTH_SHORT).show();
-                else if(password.equals(""))
-                    Toast.makeText(getApplicationContext(), "Debe ingresar una contraseña.", Toast.LENGTH_SHORT).show();
-                else if(correo.equals(""))
-                    Toast.makeText(getApplicationContext(), "Debe ingresar un correo.", Toast.LENGTH_SHORT).show();
                 else if(SplashActivity.sql.read(ConexionSQLite.TABLE_USUARIO, "Usuario='"+usuario+"'").length > 0)
                     Toast.makeText(getApplicationContext(), "El usuario ya existe.", Toast.LENGTH_SHORT).show();
+                else if(password.equals(""))
+                    Toast.makeText(getApplicationContext(), "Debe ingresar una contraseña.", Toast.LENGTH_SHORT).show();
+                else if(password.length() < 6)
+                    Toast.makeText(getApplicationContext(), "La contraseña debe tener mas de 6 caracteres.", Toast.LENGTH_SHORT).show();
+                else if(correo.equals(""))
+                    Toast.makeText(getApplicationContext(), "Debe ingresar un correo.", Toast.LENGTH_SHORT).show();
+                else if(!correo.matches(regex))
+                    Toast.makeText(getApplicationContext(), "Ingresa un correo valido.", Toast.LENGTH_SHORT).show();
                 else {
                     long id = SplashActivity.sql.insert(new Usuario(nombre, usuario, password, correo));
                     HomeFragment.usuarioID = id;

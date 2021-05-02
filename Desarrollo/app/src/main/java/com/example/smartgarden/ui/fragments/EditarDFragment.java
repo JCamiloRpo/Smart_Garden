@@ -54,17 +54,23 @@ public class EditarDFragment extends Fragment {
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nombre = txtNombre.getText().toString(), usuario = txtUsuario.getText().toString(),
-                        password = txtPassword.getText().toString(), correo = txtCorreo.getText().toString(),
-                        passwordconfirm = txtPasswordConfirm.getText().toString();
+                String nombre = txtNombre.getText().toString().trim(), usuario = txtUsuario.getText().toString().trim(),
+                        password = txtPassword.getText().toString().trim(), correo = txtCorreo.getText().toString().trim(),
+                        passwordconfirm = txtPasswordConfirm.getText().toString().trim(),
+                        regex = "(?:[^<>()\\[\\].,;:\\s@\"]+(?:\\.[^<>()\\[\\].,;:\\s@\"]+)*|\"[^\\n\"]+\")@(?:[^<>()\\[\\].,;:\\s@\"]+\\.)+[^<>()\\[\\]\\.,;:\\s@\"]{2,63}";
+
                 if(nombre.equals(""))
                     Toast.makeText(getContext(), "Debe ingresar un nombre.", Toast.LENGTH_SHORT).show();
                 else if(password.equals(""))
                     Toast.makeText(getContext(), "Debe ingresar una contraseña.", Toast.LENGTH_SHORT).show();
+                else if(password.length() < 6)
+                    Toast.makeText(getContext(), "La contraseña debe tener mas de 6 caracteres.", Toast.LENGTH_SHORT).show();
                 else if(!password.equals(passwordconfirm))
                     Toast.makeText(getContext(), "Las contraseñas no coinciden.", Toast.LENGTH_SHORT).show();
                 else if(correo.equals(""))
                     Toast.makeText(getContext(), "Debe ingresar un correo.", Toast.LENGTH_SHORT).show();
+                else if(!correo.matches(regex))
+                    Toast.makeText(getContext(), "Ingresa un correo valido.", Toast.LENGTH_SHORT).show();
                 else {
                     SplashActivity.sql.update(new Usuario(nombre, usuario, password, correo), HomeFragment.usuarioID);
                     Navigation.findNavController(v).popBackStack();

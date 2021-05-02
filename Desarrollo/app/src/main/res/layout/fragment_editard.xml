@@ -33,6 +33,7 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
                 android:autofillHints=""
+                android:drawableEnd="@drawable/ic_person_blue_24dp"
                 android:ems="10"
                 android:enabled="false"
                 android:hint="@string/usuario"
@@ -46,6 +47,7 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
                 android:autofillHints=""
+                android:drawableEnd="@drawable/ic_text_blue_24dp"
                 android:ems="10"
                 android:hint="@string/nombre"
                 android:inputType="textPersonName" />
@@ -58,6 +60,7 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
                 android:autofillHints=""
+                android:drawableEnd="@drawable/ic_email_blue_24dp"
                 android:ems="10"
                 android:hint="@string/correo"
                 android:inputType="textEmailAddress" />
@@ -70,6 +73,7 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
                 android:autofillHints=""
+                android:drawableEnd="@drawable/ic_key_blue_24dp"
                 android:ems="10"
                 android:hint="@string/password"
                 android:inputType="textPassword" />
@@ -82,6 +86,7 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
                 android:autofillHints=""
+                android:drawableEnd="@drawable/ic_key_blue_24dp"
                 android:ems="10"
                 android:hint="@string/confirm_passw"
                 android:inputType="textPassword" />
