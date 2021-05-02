@@ -1,7 +1,8 @@
-package com.example.smartgarden;
+package com.example.smartgarden.ui.activities;
 
 import android.os.Bundle;
 
+import com.example.smartgarden.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
