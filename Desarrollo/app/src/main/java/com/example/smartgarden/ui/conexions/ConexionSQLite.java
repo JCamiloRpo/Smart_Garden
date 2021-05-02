@@ -5,10 +5,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.smartgarden.ui.entities.Sesion;
 import com.example.smartgarden.ui.entities.Usuario;
 
 public class ConexionSQLite {
     public static final String TABLE_USUARIO = "tb_Usuario";
+    public static final String TABLE_SESION = "tb_Sesion";
 
     private SQLiteHelper conn; //conexion a BD.
     private SQLiteDatabase db;
@@ -17,6 +19,11 @@ public class ConexionSQLite {
         conn = new SQLiteHelper(context,name,factory,version);
     }
 
+    /**
+     * Metodos inserts sobrecargados para guardar registros
+     * @param usuario el registro a guardar
+     * @return el id del registro
+     */
     public long insert(Usuario usuario){
         db = conn.getWritableDatabase();
         long result = db.insert(TABLE_USUARIO, null, usuario.toContentValues());
@@ -24,6 +31,49 @@ public class ConexionSQLite {
         return result;
     }
 
+    /**
+     * Metodos inserts sobrecargados para guardar registros
+     * @param sesion el registro a guardar
+     * @return el id del registro
+     */
+    public long insert(Sesion sesion){
+        db = conn.getWritableDatabase();
+        long result = db.insert(TABLE_SESION, null, sesion.toContentValues());
+        db.close();
+        return result;
+    }
+
+    /**
+     * Metodo para leer infromacion de la BD.
+     * @param table a consultar
+     * @return un arreglo con la representacion de la tabla
+     */
+    public String[][] read(String table){
+        String[][] result;
+        SQLiteDatabase db = conn.getReadableDatabase();
+        String query = "SELECT * FROM "+table;
+        Cursor c= db.rawQuery(query, null);
+        if (c.moveToFirst()) {
+            result = new String[c.getCount()][c.getColumnCount()];
+            int i=0;
+            do {
+                for(int j=0; j<c.getColumnCount(); j++)
+                    result[i][j] = c.getString(j);
+                i++;
+            } while (c.moveToNext());
+        }
+        else
+            result=new String[0][0];
+        db.close();
+        return result;
+    }
+
+    /**
+     * Metodo para leer infromacion de la BD.
+     * @param table a consultar
+     * @param where clausula para filtar
+     * @return un arreglo con la misma estructura de una tabla
+     */
     public String[][] read(String table, String where){
         String[][] result;
         SQLiteDatabase db = conn.getReadableDatabase();
@@ -56,6 +106,11 @@ public class ConexionSQLite {
                 "Password TEXT NOT NULL, " +
                 "Correo TEXT NOT NULL)";
 
+        String crear_tbSesion = "CREATE TABLE  "+TABLE_SESION+" (" +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "UsuarioID INTEGER, " +
+                "FOREIGN KEY (UsuarioID) REFERENCES " + TABLE_USUARIO+"(ID) ON DELETE CASCADE ON UPDATE CASCADE)";
+
         public SQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
         }
@@ -64,14 +119,21 @@ public class ConexionSQLite {
         public void onCreate(SQLiteDatabase db) {
             /*Se ejecuta automaticamente para crear la BD si no existe*/
             db.execSQL(crear_tbUsuario);
+            db.execSQL(crear_tbSesion);
+            //Activar las foreign Keys
+            db.execSQL("PRAGMA foreign_keys=ON");
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             /*Se ejecuta cuando la version de la BD cambia, por lo que se define la migracion de la estructura*/
             db.execSQL("DROP TABLE IF EXISTS "+TABLE_USUARIO);
+            db.execSQL("DROP TABLE IF EXISTS "+TABLE_SESION);
 
             db.execSQL(crear_tbUsuario);
+            db.execSQL(crear_tbSesion);
+            //Activar las foreign Keys
+            db.execSQL("PRAGMA foreign_keys=ON");
         }
     }
 }
