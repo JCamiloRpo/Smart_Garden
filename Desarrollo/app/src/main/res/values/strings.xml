@@ -25,4 +25,9 @@
     <string name="desde_2021">- Desde 2021 -</string>
     <string name="icono_notificacion">Icono notificacion</string>
     <string name="titulo_notificacion">Titulo notificacion</string>
+    <string name="atras">Atras</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="volver">Volver</string>
+    <string name="titulo">Cosechar área 1</string>
+    <string name="noti_descripcion">Despues de todo su arduo trabajo, tiempo y dedicación al cultivar sus frutas y verduras durante la temporada, recordad cuándo debe cosecharlas es tan importante como cultivarlas.</string>
 </resources>
