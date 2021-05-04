@@ -11,9 +11,13 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.smartgarden.ui.fragments.DashboardFragment"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_analisis"
+        android:name="com.example.smartgarden.ui.fragments.AnalisisFragment"
+        tools:layout="@layout/fragment_analisis" >
+        <action
+            android:id="@+id/action_analisis_to_detalle"
+            app:destination="@id/analisisDetalleFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -33,5 +37,10 @@
         android:name="com.example.smartgarden.ui.fragments.EditarDFragment"
         android:label="fragment_editard"
         tools:layout="@layout/fragment_editard" />
+    <fragment
+        android:id="@+id/analisisDetalleFragment"
+        android:name="com.example.smartgarden.ui.fragments.AnalisisDetalleFragment"
+        android:label="fragment_analisisdetalle"
+        tools:layout="@layout/fragment_analisisdetalle" />
 
 </navigation>
