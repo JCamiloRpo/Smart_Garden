@@ -10,10 +10,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.navigation.Navigation;
+
 import com.example.smartgarden.R;
 import com.example.smartgarden.ui.activities.NotiDetalleActivity;
 import com.example.smartgarden.ui.entities.Analisis;
 import com.example.smartgarden.ui.entities.Notificacion;
+import com.example.smartgarden.ui.fragments.AnalisisDetalleFragment;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -26,6 +29,7 @@ import java.util.ArrayList;
 public class AnalisisAdapter extends BaseAdapter {
     private Activity activity;
     private ArrayList<Analisis> items;
+    LineChart chtGrafica;
 
     public AnalisisAdapter(Activity activity, ArrayList<Analisis> items){
         this.activity = activity;
@@ -50,11 +54,24 @@ public class AnalisisAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.item_analisis, null);
         }
         TextView txtTitulo = convertView.findViewById(R.id.TxtItemAnalisis);
-        LineChart chtGrafica = convertView.findViewById(R.id.ChtItemLine);
+        chtGrafica = convertView.findViewById(R.id.ChtItemLine);
 
         txtTitulo.setText(item.getTitulo());
         chtGrafica.setData(item.getGrafica());
+        configurarGrafica();
 
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnalisisDetalleFragment.titulo = item.getTitulo();
+                Navigation.findNavController(v).navigate(R.id.action_analisis_to_detalle);
+            }
+        });
+
+        return convertView;
+    }
+
+    private void configurarGrafica(){
         chtGrafica.setNoDataText("No se encontraron datos");
         chtGrafica.setScaleEnabled(false);
         chtGrafica.setTouchEnabled(false);
@@ -73,10 +90,7 @@ public class AnalisisAdapter extends BaseAdapter {
         Legend legend = chtGrafica.getLegend();
         legend.setEnabled(false);
 
-        chtGrafica.animateY(2000, Easing.EaseInOutCubic);
+        chtGrafica.animateY(1000, Easing.EaseInOutCubic);
         chtGrafica.invalidate();
-
-
-        return convertView;
     }
 }

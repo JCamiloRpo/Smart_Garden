@@ -1,6 +1,5 @@
 package com.example.smartgarden.ui.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import com.example.smartgarden.R;
-import com.example.smartgarden.ui.activities.MainActivity;
 import com.example.smartgarden.ui.adapters.AnalisisAdapter;
 import com.example.smartgarden.ui.entities.Analisis;
 import com.github.mikephil.charting.data.Entry;
@@ -19,12 +17,12 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 
-public class DashboardFragment extends Fragment {
+public class AnalisisFragment extends Fragment {
     ListView list;
     AnalisisAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View root = inflater.inflate(R.layout.fragment_analisis, container, false);
 
         setUpView(root);
         return root;
@@ -49,7 +47,7 @@ public class DashboardFragment extends Fragment {
         dataSet.setValueTextSize(14);
 
         dataSets.add(dataSet);
-        analisis.add(new Analisis(1, "Ánalisis de cultivo 1", new LineData(dataSets)));
+        analisis.add(new Analisis(1, "Area de cultivo 1", new LineData(dataSets)));
 
         dataSet = new LineDataSet(valuesData(), "Datos 2");
         dataSets = new ArrayList<>();
@@ -60,7 +58,7 @@ public class DashboardFragment extends Fragment {
         dataSet.setValueTextSize(14);
 
         dataSets.add(dataSet);
-        analisis.add(new Analisis(2, "Ánalisis de cultivo 2", new LineData(dataSets)));
+        analisis.add(new Analisis(2, "Area de cultivo 2", new LineData(dataSets)));
 
         dataSet = new LineDataSet(valuesData(), "Datos 3");
         dataSets = new ArrayList<>();
@@ -71,7 +69,7 @@ public class DashboardFragment extends Fragment {
         dataSet.setValueTextSize(14);
 
         dataSets.add(dataSet);
-        analisis.add(new Analisis(3, "Ánalisis de cultivo 3", new LineData(dataSets)));
+        analisis.add(new Analisis(3, "Area de cultivo 3", new LineData(dataSets)));
         return analisis;
     }
 
