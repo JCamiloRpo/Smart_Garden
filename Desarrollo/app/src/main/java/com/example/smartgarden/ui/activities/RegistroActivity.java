@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.smartgarden.R;
@@ -18,6 +19,7 @@ import com.example.smartgarden.ui.fragments.HomeFragment;
 public class RegistroActivity extends AppCompatActivity {
     EditText txtNombre, txtUsuario, txtPassword, txtCorreo;
     Button btnRegistrar;
+    ImageButton btnVolver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,14 @@ public class RegistroActivity extends AppCompatActivity {
                     startActivity(i);
                     finish();
                 }
+            }
+        });
+
+        btnVolver = findViewById(R.id.BtnVolverR);
+        btnVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }

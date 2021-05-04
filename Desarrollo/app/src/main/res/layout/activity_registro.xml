@@ -16,11 +16,23 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
+            <ImageButton
+                android:id="@+id/BtnVolverR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/style_btnvolver"
+                android:contentDescription="@string/volver"
+                android:padding="5dp"
+                android:src="@drawable/ic_back_black_24dp" />
+
             <ImageView
                 android:id="@+id/ImgLogo"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginBottom="40dp"
                 android:contentDescription="@string/logo"
                 android:src="@drawable/logo" />
