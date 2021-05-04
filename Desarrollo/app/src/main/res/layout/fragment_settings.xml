@@ -95,15 +95,14 @@
                 android:layout_marginStart="70dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="70dp"
-                android:backgroundTint="@color/blue"
+                android:backgroundTint="@color/blue_light"
                 android:gravity="center"
                 android:padding="15dp"
                 android:text="@string/cerrar_sesion"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 app:cornerRadius="20dp"
-                app:strokeColor="@color/white"
                 app:strokeWidth="2dp" />
 
         </LinearLayout>

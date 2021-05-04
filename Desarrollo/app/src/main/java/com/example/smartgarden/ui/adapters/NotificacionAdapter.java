@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.smartgarden.R;
+import com.example.smartgarden.ui.activities.NotiDetalleActivity;
 import com.example.smartgarden.ui.entities.Notificacion;
 import java.util.ArrayList;
 
@@ -46,6 +47,15 @@ public class NotificacionAdapter extends BaseAdapter {
 
         img.setImageResource(item.getImg());
         txtTitulo.setText(item.getTitulo());
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotiDetalleActivity.setPos(position);
+                Intent i = new Intent(activity, NotiDetalleActivity.class);
+                activity.startActivity(i);
+            }
+        });
 
         return convertView;
     }
