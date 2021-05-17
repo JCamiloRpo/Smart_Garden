@@ -1,6 +1,10 @@
 package com.example.smartgarden.ui.conexions;
 
 import android.content.Context;
+import android.os.AsyncTask;
+import android.widget.Toast;
+
+import com.example.smartgarden.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +31,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManagerFactory;
 
 public class ConexionAPI {
+    public static String TABLE_NOTIFICACION = "Notificaciones";
 
     private String url;
     private Context context;
@@ -37,9 +42,7 @@ public class ConexionAPI {
      * Constructor que recibe el url por del servidor API REST
      * @param url ejemplo https://192.168.4.1/ApiRest
      */
-    public ConexionAPI(String url){
-        this.url = url;
-    }
+    public ConexionAPI(String url){ this.url = url; }
 
     /**
      * Obtener los datos de una tabla con todas las columnas
@@ -223,7 +226,6 @@ public class ConexionAPI {
         }
 
         if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-
             in = new BufferedReader( new InputStreamReader(con.getInputStream()));
             response = new StringBuffer();
             while ((inputLine = in.readLine()) != null)
@@ -251,6 +253,7 @@ public class ConexionAPI {
             return (url.getResponseCode() == HttpURLConnection.HTTP_OK);
         } catch (Exception e) {
             System.out.println("Error tryConnect \n"+ e.getMessage());
+            e.printStackTrace();
             return false;
         }
 

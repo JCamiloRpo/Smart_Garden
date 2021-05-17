@@ -5,12 +5,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.smartgarden.ui.entities.Notificacion;
 import com.example.smartgarden.ui.entities.Sesion;
 import com.example.smartgarden.ui.entities.Usuario;
 
 public class ConexionSQLite {
     public static final String TABLE_USUARIO = "tb_Usuario";
     public static final String TABLE_SESION = "tb_Sesion";
+    public static final String TABLE_NOTIFICACION = "tb_Notificacion";
 
     private SQLiteHelper conn; //conexion a BD.
     private SQLiteDatabase db;
@@ -39,6 +41,18 @@ public class ConexionSQLite {
     public long insert(Sesion item){
         db = conn.getWritableDatabase();
         long result = db.insert(TABLE_SESION, null, item.toContentValues());
+        db.close();
+        return result;
+    }
+
+    /**
+     * Metodos inserts sobrecargados para guardar registros
+     * @param item el registro a guardar
+     * @return el id del registro
+     */
+    public long insert(Notificacion item){
+        db = conn.getWritableDatabase();
+        long result = db.insert(TABLE_NOTIFICACION, null, item.toContentValues());
         db.close();
         return result;
     }
@@ -122,7 +136,14 @@ public class ConexionSQLite {
         return resul;
     }
 
-    private class SQLiteHelper extends SQLiteOpenHelper {
+    public void clear(String table){
+        db = conn.getWritableDatabase();
+        db.setForeignKeyConstraintsEnabled(true);
+        int resul = db.delete(table, "ID > ?", new String[]{"-1"});
+        db.close();
+    }
+
+    public class SQLiteHelper extends SQLiteOpenHelper {
 
         /* Como no existen el tipo de dato boolean, se utilizará el Integer donde 0 es false y 1 es true
         Como tampoco existe el tipo de dato Datetime, se utilizará el TEXT con el formato DD/MM/AAAA
@@ -140,6 +161,13 @@ public class ConexionSQLite {
                 "Usuario TEXT," +
                 "FOREIGN KEY (UsuarioID) REFERENCES " + TABLE_USUARIO+"(ID) ON DELETE CASCADE ON UPDATE CASCADE)";
 
+        public String crear_tbNotificacion = "CREATE TABLE "+TABLE_NOTIFICACION+" (" +
+                "ID INTEGER PRIMARY KEY NOT NULL, " +
+                "Tipo INTEGER NOT NULL, " +
+                "Titulo TEXT NOT NULL," +
+                "Descripcion TEXT NOT NULL," +
+                "Estado INTEGER NOT NULL)";
+
         public SQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
         }
@@ -149,6 +177,7 @@ public class ConexionSQLite {
             /*Se ejecuta automaticamente para crear la BD si no existe*/
             db.execSQL(crear_tbUsuario);
             db.execSQL(crear_tbSesion);
+            db.execSQL(crear_tbNotificacion);
             //Activar las foreign Keys
             db.execSQL("PRAGMA foreign_keys=ON");
         }
@@ -158,9 +187,11 @@ public class ConexionSQLite {
             /*Se ejecuta cuando la version de la BD cambia, por lo que se define la migracion de la estructura*/
             db.execSQL("DROP TABLE IF EXISTS "+TABLE_USUARIO);
             db.execSQL("DROP TABLE IF EXISTS "+TABLE_SESION);
+            db.execSQL("DROP TABLE IF EXISTS "+TABLE_NOTIFICACION);
 
             db.execSQL(crear_tbUsuario);
             db.execSQL(crear_tbSesion);
+            db.execSQL(crear_tbNotificacion);
             //Activar las foreign Keys
             db.execSQL("PRAGMA foreign_keys=ON");
         }
