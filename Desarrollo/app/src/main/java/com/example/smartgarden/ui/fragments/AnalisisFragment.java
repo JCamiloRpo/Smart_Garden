@@ -1,10 +1,12 @@
 package com.example.smartgarden.ui.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +33,10 @@ public class AnalisisFragment extends Fragment {
     ListView list;
     AnalisisAdapter adapter;
     TextView txtNoData;
+    ProgressBar progress;
     boolean data;
+    ArrayList<Entry>[] values;
+    ConnectTask descarga = new ConnectTask();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_analisis, container, false);
@@ -40,15 +45,30 @@ public class AnalisisFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        descarga.cancel(true);
+    }
+
     private void setUpView(View v){
         Utils.init(getContext());
         list = v.findViewById(R.id.ListAnalisis);
+        list.setVisibility(View.GONE);
+        txtNoData = v.findViewById(R.id.TxtNoData);
+        txtNoData.setVisibility(View.GONE);
+        progress = v.findViewById(R.id.Progress);
+        progress.setVisibility(View.VISIBLE);
 
-        //Consultar datos
+        descarga.execute();
+    }
+
+    private void finish(){
+        progress.setVisibility(View.GONE);
+
         adapter = new AnalisisAdapter(getActivity(), datos());
         list.setAdapter(adapter);
 
-        txtNoData = v.findViewById(R.id.TxtNoData);
         if (data) {
             txtNoData.setVisibility(View.GONE);
             list.setVisibility(View.VISIBLE);
@@ -61,7 +81,6 @@ public class AnalisisFragment extends Fragment {
 
     private ArrayList<Analisis> datos(){
         ArrayList<Analisis> analisis = new ArrayList<>();
-        ArrayList<Entry>[] values = valuesData();
 
         LineDataSet tem_suelo = new LineDataSet(values[0], "Tem Suelo");
         tem_suelo.setLineWidth(10);
@@ -135,11 +154,9 @@ public class AnalisisFragment extends Fragment {
         try {
             if (connectAPI){
                 sql.clear(ConexionSQLite.TABLE_REGISTRO); // Limpiar tabla local
-                Toast.makeText(getContext(), "Actualizando registro...", Toast.LENGTH_SHORT).show();
                 dataDB = api.getData(ConexionAPI.TABLE_REGISTRO);   // Obtener datos
             }
             else {
-                Toast.makeText(getContext(), "No se encuentra conectado.", Toast.LENGTH_SHORT).show();
                 dataDB = sql.read(ConexionSQLite.TABLE_REGISTRO);
             }
             for (int i=dataDB.length-1, j=0; i > -1; i--, j++){    // Recorrer datos
@@ -179,4 +196,51 @@ public class AnalisisFragment extends Fragment {
 
         return values;
     }
+
+    /**
+     * Clase interna para probar la conexión y no bloquear la pantalla
+     */
+    private class ConnectTask extends AsyncTask<String, Float, Integer> {
+
+        /**
+         * Lo ejecuta el hilo principal antes de que inicie el hilo hijo
+         */
+        @Override
+        protected void onPreExecute() { }
+
+        /**
+         * Lo ejecuta el hilo hijo en segundo plano
+         * @param params
+         * @return
+         */
+        @Override
+        protected Integer doInBackground(String[] params) {
+            //Consultar datos
+            values = valuesData();
+            return 0;
+        }
+
+        /**
+         * Lo ejecuta el hilo hijo despues de terminar su codigo
+         * @param result
+         */
+        @Override
+        protected void onPostExecute(Integer result) { finish(); }
+
+        /**
+         * Si se llega cancelar por alguna razon para el hilo hijo
+         * @param result
+         */
+        @Override
+        protected void onCancelled(Integer result) { }
+
+        /**
+         * Lo ejecuta el hilo hijo por si se quiere mostrar una barra de progreso
+         * @param values
+         */
+        @Override
+        protected void onProgressUpdate(Float... values) { }
+
+    }
+
 }

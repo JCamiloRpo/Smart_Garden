@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import com.example.smartgarden.R;
 import com.example.smartgarden.ui.activities.NotiDetalleActivity;
+import com.example.smartgarden.ui.adapters.AnalisisAdapter;
 import com.example.smartgarden.ui.adapters.NotificacionAdapter;
 import com.example.smartgarden.ui.conexions.ConexionAPI;
 import com.example.smartgarden.ui.conexions.ConexionSQLite;
@@ -31,7 +33,10 @@ public class NotificationsFragment extends Fragment {
     ListView list;
     NotificacionAdapter adapter;
     TextView txtNoData;
+    ProgressBar progress;
+    ArrayList<Notificacion> noti;
     boolean data;
+    ConnectTask descarga = new ConnectTask();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
@@ -40,13 +45,29 @@ public class NotificationsFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        descarga.cancel(true);
+    }
+
     private void setUpView(View v){
         list = v.findViewById(R.id.ListNoti);
-        //Consultar datos
-        adapter = new NotificacionAdapter(getActivity(), consultarDatos());
+        list.setVisibility(View.GONE);
+        txtNoData = v.findViewById(R.id.TxtNoData);
+        txtNoData.setVisibility(View.GONE);
+        progress = v.findViewById(R.id.Progress);
+        progress.setVisibility(View.VISIBLE);
+
+        descarga.execute();
+    }
+
+    private void finish(){
+        progress.setVisibility(View.GONE);
+
+        adapter = new NotificacionAdapter(getActivity(), noti);
         list.setAdapter(adapter);
 
-        txtNoData = v.findViewById(R.id.TxtNoData);
         if (data) {
             txtNoData.setVisibility(View.GONE);
             list.setVisibility(View.VISIBLE);
@@ -64,11 +85,9 @@ public class NotificationsFragment extends Fragment {
         try {
             if (connectAPI){
                 sql.clear(ConexionSQLite.TABLE_NOTIFICACION); // Limpiar tabla local
-                Toast.makeText(getContext(), "Actualizando notificaciones...", Toast.LENGTH_SHORT).show();
                 notiDB = api.getData(ConexionAPI.TABLE_NOTIFICACION);   // Obtener datos
             }
             else {
-                Toast.makeText(getContext(), "No se encuentra conectado.", Toast.LENGTH_SHORT).show();
                 notiDB = sql.read(ConexionSQLite.TABLE_NOTIFICACION);
             }
             for (int i=0; i<notiDB.length; i++){    // Recorrer datos
@@ -119,6 +138,52 @@ public class NotificationsFragment extends Fragment {
         noti.add(new Notificacion(10, 3, R.drawable.noti_cosechar2, "Cosechar área 2", "Despues de todo su arduo trabajo, tiempo y dedicación al cultivar sus frutas y verduras durante la temporada, recordad cuándo debe cosecharlas es tan importante como cultivarlas."));
         NotiDetalleActivity.setNoti(noti);
         return noti;
+    }
+
+    /**
+     * Clase interna para probar la conexión y no bloquear la pantalla
+     */
+    private class ConnectTask extends AsyncTask<String, Float, Integer> {
+
+        /**
+         * Lo ejecuta el hilo principal antes de que inicie el hilo hijo
+         */
+        @Override
+        protected void onPreExecute() { }
+
+        /**
+         * Lo ejecuta el hilo hijo en segundo plano
+         * @param params
+         * @return
+         */
+        @Override
+        protected Integer doInBackground(String[] params) {
+            //Consultar datos
+            noti = consultarDatos();
+            return 0;
+        }
+
+        /**
+         * Lo ejecuta el hilo hijo despues de terminar su codigo
+         * @param result
+         */
+        @Override
+        protected void onPostExecute(Integer result) { finish(); }
+
+        /**
+         * Si se llega cancelar por alguna razon para el hilo hijo
+         * @param result
+         */
+        @Override
+        protected void onCancelled(Integer result) { }
+
+        /**
+         * Lo ejecuta el hilo hijo por si se quiere mostrar una barra de progreso
+         * @param values
+         */
+        @Override
+        protected void onProgressUpdate(Float... values) { }
+
     }
 
 }
