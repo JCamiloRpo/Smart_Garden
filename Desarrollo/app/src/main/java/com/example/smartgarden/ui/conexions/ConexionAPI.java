@@ -224,15 +224,18 @@ public class ConexionAPI {
             wr.writeBytes(params);
             wr.flush();
             wr.close();
+            con.disconnect();
         }
 
         if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-            in = new BufferedReader( new InputStreamReader(con.getInputStream()));
+            InputStreamReader reader = new InputStreamReader(con.getInputStream());
+            in = new BufferedReader(reader);
             response = new StringBuffer();
             while ((inputLine = in.readLine()) != null)
                 response.append(inputLine);
-
             in.close();
+            reader.close();
+            con.disconnect();
             return response.toString();
         }
         else
@@ -248,8 +251,8 @@ public class ConexionAPI {
         try {
 
             url.setRequestProperty("User-Agent", "Test");
-            url.setRequestProperty("Connection", "close");
-            url.setConnectTimeout(1500);
+            //url.setRequestProperty("Connection", "close");
+            url.setConnectTimeout(10000);
             url.connect();
             return (url.getResponseCode() == HttpURLConnection.HTTP_OK);
         } catch (Exception e) {

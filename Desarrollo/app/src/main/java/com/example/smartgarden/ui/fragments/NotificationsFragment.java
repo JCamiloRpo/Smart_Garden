@@ -47,8 +47,14 @@ public class NotificationsFragment extends Fragment {
         list.setAdapter(adapter);
 
         txtNoData = v.findViewById(R.id.TxtNoData);
-        if (data) txtNoData.setVisibility(View.GONE);
-        else txtNoData.setVisibility(View.VISIBLE);
+        if (data) {
+            txtNoData.setVisibility(View.GONE);
+            list.setVisibility(View.VISIBLE);
+        }
+        else {
+            txtNoData.setVisibility(View.VISIBLE);
+            list.setVisibility(View.GONE);
+        }
     }
 
     private ArrayList<Notificacion> consultarDatos(){

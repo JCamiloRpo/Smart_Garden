@@ -60,7 +60,7 @@ public class AnalisisAdapter extends BaseAdapter {
         chtGrafica.setData(item.getGrafica());
         configurarGrafica();
 
-        convertView.setOnClickListener(new View.OnClickListener() {
+        txtTitulo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AnalisisDetalleFragment.titulo = item.getTitulo();
@@ -73,8 +73,9 @@ public class AnalisisAdapter extends BaseAdapter {
 
     private void configurarGrafica(){
         chtGrafica.setNoDataText("No se encontraron datos");
-        chtGrafica.setScaleEnabled(false);
-        chtGrafica.setTouchEnabled(false);
+        chtGrafica.setDoubleTapToZoomEnabled(false);
+        chtGrafica.setTouchEnabled(true);
+        chtGrafica.zoomToCenter(15,0);
         chtGrafica.setDescription(null);
         XAxis xAxis = chtGrafica.getXAxis();
         xAxis.setDrawAxisLine(false);
@@ -88,7 +89,7 @@ public class AnalisisAdapter extends BaseAdapter {
         yAxis[1].setDrawGridLines(false);
         yAxis[1].setDrawLabels(false);
         Legend legend = chtGrafica.getLegend();
-        legend.setEnabled(false);
+        legend.setEnabled(true);
 
         chtGrafica.animateY(1000, Easing.EaseInOutCubic);
         chtGrafica.invalidate();
