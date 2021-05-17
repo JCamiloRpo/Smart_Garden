@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,8 @@ import static com.example.smartgarden.ui.activities.SplashActivity.sql;
 public class AnalisisFragment extends Fragment {
     ListView list;
     AnalisisAdapter adapter;
+    TextView txtNoData;
+    boolean data;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_analisis, container, false);
@@ -47,6 +50,10 @@ public class AnalisisFragment extends Fragment {
         //Consultar datos
         adapter = new AnalisisAdapter(getActivity(), pruebaDatos());
         list.setAdapter(adapter);
+
+        txtNoData = v.findViewById(R.id.TxtNoData);
+        if (data) txtNoData.setVisibility(View.GONE);
+        else txtNoData.setVisibility(View.VISIBLE);
     }
 
     private ArrayList<Analisis> pruebaDatos(){
@@ -95,6 +102,7 @@ public class AnalisisFragment extends Fragment {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+        data = !values.isEmpty();
         return values;
     }
 

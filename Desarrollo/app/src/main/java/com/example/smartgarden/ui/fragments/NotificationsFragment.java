@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,8 @@ import static com.example.smartgarden.ui.activities.SplashActivity.*;
 public class NotificationsFragment extends Fragment {
     ListView list;
     NotificacionAdapter adapter;
+    TextView txtNoData;
+    boolean data;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
@@ -42,6 +45,10 @@ public class NotificationsFragment extends Fragment {
         //Consultar datos
         adapter = new NotificacionAdapter(getActivity(), consultarDatos());
         list.setAdapter(adapter);
+
+        txtNoData = v.findViewById(R.id.TxtNoData);
+        if (data) txtNoData.setVisibility(View.GONE);
+        else txtNoData.setVisibility(View.VISIBLE);
     }
 
     private ArrayList<Notificacion> consultarDatos(){
@@ -88,6 +95,7 @@ public class NotificationsFragment extends Fragment {
             e.printStackTrace();
         }
         NotiDetalleActivity.setNoti(noti);
+        data = !noti.isEmpty();
         return noti;
     }
 
