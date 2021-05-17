@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,16 +29,57 @@
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/ChtLine"
+            <Spinner
+                android:id="@+id/SpGraficaIndividual"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_margin="20dp"
-                android:background="@drawable/style_chart" >
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="5dp"
+                android:dropDownWidth="match_parent"
+                android:entries="@array/graficas_individual"
+                android:spinnerMode="dialog"
+                android:textAlignment="center"
+                android:textSize="18sp" />
 
-            </com.github.mikephil.charting.charts.LineChart>
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/ChtLineIndividual"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/style_chart" />
 
-            <com.github.mikephil.charting.charts.PieChart
+            <Spinner
+                android:id="@+id/SpGraficaCombinada"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="5dp"
+                android:dropDownWidth="match_parent"
+                android:entries="@array/graficas_combinada"
+                android:spinnerMode="dialog"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/ChtLineCombinada"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/style_chart" />
+
+            <!--com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/ChtPie1"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -45,13 +87,38 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/style_chart" />
+                android:background="@drawable/style_chart" /-->
+
+            <TextView
+                android:id="@+id/TxtGraficaBarras"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/ultimos_datos"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="5dp"
+                android:background="#2D2F31"
+                android:backgroundTint="#BABABA"
+                android:textAlignment="center" />
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/ChtBar"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_margin="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/style_chart" />
 
         </LinearLayout>

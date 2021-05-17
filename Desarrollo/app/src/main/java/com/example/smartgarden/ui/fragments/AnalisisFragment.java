@@ -1,6 +1,5 @@
 package com.example.smartgarden.ui.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.example.smartgarden.ui.adapters.AnalisisAdapter;
 import com.example.smartgarden.ui.conexions.ConexionAPI;
 import com.example.smartgarden.ui.conexions.ConexionSQLite;
 import com.example.smartgarden.ui.entities.Analisis;
-import com.example.smartgarden.ui.entities.Notificacion;
 import com.example.smartgarden.ui.entities.Registro;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -25,7 +23,6 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import static com.example.smartgarden.ui.activities.SplashActivity.api;
 import static com.example.smartgarden.ui.activities.SplashActivity.sql;
@@ -48,7 +45,7 @@ public class AnalisisFragment extends Fragment {
         list = v.findViewById(R.id.ListAnalisis);
 
         //Consultar datos
-        adapter = new AnalisisAdapter(getActivity(), pruebaDatos());
+        adapter = new AnalisisAdapter(getActivity(), datos());
         list.setAdapter(adapter);
 
         txtNoData = v.findViewById(R.id.TxtNoData);
@@ -62,7 +59,7 @@ public class AnalisisFragment extends Fragment {
         }
     }
 
-    private ArrayList<Analisis> pruebaDatos(){
+    private ArrayList<Analisis> datos(){
         ArrayList<Analisis> analisis = new ArrayList<>();
         ArrayList<Entry>[] values = valuesData();
 
@@ -74,6 +71,7 @@ public class AnalisisFragment extends Fragment {
         tem_suelo.setCircleHoleRadius(10f);
         tem_suelo.setCircleColors(new int[]{R.color.blue}, getContext());
         tem_suelo.setDrawValues(true);
+        tem_suelo.setValueTextSize(10);
 
         LineDataSet tem_aire = new LineDataSet(values[1], "Tem Aire");
         tem_aire.setLineWidth(10);
@@ -83,6 +81,7 @@ public class AnalisisFragment extends Fragment {
         tem_aire.setCircleHoleRadius(10f);
         tem_aire.setCircleColors(new int[]{R.color.blue}, getContext());
         tem_aire.setDrawValues(true);
+        tem_aire.setValueTextSize(10);
 
         LineDataSet hum_suelo = new LineDataSet(values[2], "Hum Suelo");
         hum_suelo.setLineWidth(10);
@@ -92,6 +91,7 @@ public class AnalisisFragment extends Fragment {
         hum_suelo.setCircleHoleRadius(10f);
         hum_suelo.setCircleColors(new int[]{R.color.blue}, getContext());
         hum_suelo.setDrawValues(true);
+        hum_suelo.setValueTextSize(10);
 
         LineDataSet hum_aire = new LineDataSet(values[3], "Hum Aire");
         hum_aire.setLineWidth(10);
@@ -101,6 +101,7 @@ public class AnalisisFragment extends Fragment {
         hum_aire.setCircleHoleRadius(10f);
         hum_aire.setCircleColors(new int[]{R.color.blue}, getContext());
         hum_aire.setDrawValues(true);
+        hum_aire.setValueTextSize(10);
 
         LineDataSet lux = new LineDataSet(values[4], "Lux");
         lux.setLineWidth(10);
@@ -110,6 +111,7 @@ public class AnalisisFragment extends Fragment {
         lux.setCircleHoleRadius(10f);
         lux.setCircleColors(new int[]{R.color.blue}, getContext());
         lux.setDrawValues(true);
+        lux.setValueTextSize(10);
 
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
@@ -119,7 +121,7 @@ public class AnalisisFragment extends Fragment {
         dataSets.add(hum_aire);
         dataSets.add(lux);
 
-        analisis.add(new Analisis(1, "Area de cultivo 1", new LineData(dataSets)));
+        analisis.add(new Analisis( tem_suelo.getEntryCount(), "Area de cultivo 1", new LineData(dataSets)));
 
         return analisis;
     }
@@ -128,7 +130,7 @@ public class AnalisisFragment extends Fragment {
         ArrayList<Entry>[] values = new ArrayList[5];
         ArrayList<Entry> tem_suelo = new ArrayList<>(), tem_aire = new ArrayList<>(),
                 hum_suelo = new ArrayList<>(), hum_aire = new ArrayList<>(), lux = new ArrayList<>();
-        String[][] dataDB;
+        String[][] dataDB = new String[0][0];
         boolean connectAPI = api.isConnected();
         try {
             if (connectAPI){
@@ -140,18 +142,18 @@ public class AnalisisFragment extends Fragment {
                 Toast.makeText(getContext(), "No se encuentra conectado.", Toast.LENGTH_SHORT).show();
                 dataDB = sql.read(ConexionSQLite.TABLE_REGISTRO);
             }
-            for (int i=0; i<dataDB.length; i++){    // Recorrer datos
+            for (int i=dataDB.length-1, j=0; i > -1; i--, j++){    // Recorrer datos
                 Registro r = new Registro(Long.parseLong(dataDB[i][0]), dataDB[i][1], Integer.parseInt(dataDB[i][2]),
                         Integer.parseInt(dataDB[i][3]), Integer.parseInt(dataDB[i][4]), Integer.parseInt(dataDB[i][5]),
                         Integer.parseInt(dataDB[i][6]));
 
                 if (connectAPI) sql.insert(r);  // Agregar a la tabla local
 
-                tem_suelo.add(new Entry(Integer.parseInt(dataDB[i][0]), Integer.parseInt(dataDB[i][2])));
-                tem_aire.add(new Entry(Integer.parseInt(dataDB[i][0]), Integer.parseInt(dataDB[i][3])));
-                hum_suelo.add(new Entry(Integer.parseInt(dataDB[i][0]), Integer.parseInt(dataDB[i][4])));
-                hum_aire.add(new Entry(Integer.parseInt(dataDB[i][0]), Integer.parseInt(dataDB[i][5])));
-                lux.add(new Entry(Integer.parseInt(dataDB[i][0]), Integer.parseInt(dataDB[i][6])));
+                tem_suelo.add(new Entry(j, Integer.parseInt(dataDB[i][2])));
+                tem_aire.add(new Entry(j, Integer.parseInt(dataDB[i][3])));
+                hum_suelo.add(new Entry(j, Integer.parseInt(dataDB[i][4])));
+                hum_aire.add(new Entry(j, Integer.parseInt(dataDB[i][5])));
+                lux.add(new Entry(j, Integer.parseInt(dataDB[i][6])));
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

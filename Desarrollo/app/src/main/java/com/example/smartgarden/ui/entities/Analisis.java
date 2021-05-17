@@ -16,5 +16,5 @@ public class Analisis {
 
     public String getTitulo() { return titulo; }
 
-    public LineData getGrafica() { return grafica; }
+    public LineData getLineData() { return grafica; }
 }

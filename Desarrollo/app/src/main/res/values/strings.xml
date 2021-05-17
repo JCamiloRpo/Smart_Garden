@@ -33,4 +33,16 @@
     <string name="title_analisis">Area de cultivo 1</string>
     <string name="server_api">http://192.168.4.1/ApiRest/</string>
     <string name="no_hay_datos_para_mostrar">No hay datos para mostrar</string>
+    <string name="ultimos_datos">Ultimos datos</string>
+    <string-array name="graficas_individual">
+        <item>Temperatura suelo</item>
+        <item>Temperatura aire</item>
+        <item>Humedad suelo</item>
+        <item>Humedad aire</item>
+        <item>Luminosidad</item>
+    </string-array>
+    <string-array name="graficas_combinada">
+        <item>Temperatura suelo vs Temperatura aire </item>
+        <item>Humedad suelo vs Humedad aire</item>
+    </string-array>
 </resources>
