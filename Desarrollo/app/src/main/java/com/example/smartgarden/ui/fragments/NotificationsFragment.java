@@ -87,7 +87,7 @@ public class NotificationsFragment extends Fragment {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-
+        NotiDetalleActivity.setNoti(noti);
         return noti;
     }
 
