@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.smartgarden.ui.entities.Notificacion;
+import com.example.smartgarden.ui.entities.Registro;
 import com.example.smartgarden.ui.entities.Sesion;
 import com.example.smartgarden.ui.entities.Usuario;
 
@@ -13,6 +14,7 @@ public class ConexionSQLite {
     public static final String TABLE_USUARIO = "tb_Usuario";
     public static final String TABLE_SESION = "tb_Sesion";
     public static final String TABLE_NOTIFICACION = "tb_Notificacion";
+    public static final String TABLE_REGISTRO = "tb_Registro";
 
     private SQLiteHelper conn; //conexion a BD.
     private SQLiteDatabase db;
@@ -53,6 +55,18 @@ public class ConexionSQLite {
     public long insert(Notificacion item){
         db = conn.getWritableDatabase();
         long result = db.insert(TABLE_NOTIFICACION, null, item.toContentValues());
+        db.close();
+        return result;
+    }
+
+    /**
+     * Metodos inserts sobrecargados para guardar registros
+     * @param item el registro a guardar
+     * @return el id del registro
+     */
+    public long insert(Registro item){
+        db = conn.getWritableDatabase();
+        long result = db.insert(TABLE_REGISTRO, null, item.toContentValues());
         db.close();
         return result;
     }
@@ -136,11 +150,17 @@ public class ConexionSQLite {
         return resul;
     }
 
-    public void clear(String table){
+    /**
+     * Eliminar todos los datos de una tabla
+     * @param table
+     * @return
+     */
+    public int clear(String table){
         db = conn.getWritableDatabase();
         db.setForeignKeyConstraintsEnabled(true);
         int resul = db.delete(table, "ID > ?", new String[]{"-1"});
         db.close();
+        return resul;
     }
 
     public class SQLiteHelper extends SQLiteOpenHelper {
@@ -161,12 +181,21 @@ public class ConexionSQLite {
                 "Usuario TEXT," +
                 "FOREIGN KEY (UsuarioID) REFERENCES " + TABLE_USUARIO+"(ID) ON DELETE CASCADE ON UPDATE CASCADE)";
 
-        public String crear_tbNotificacion = "CREATE TABLE "+TABLE_NOTIFICACION+" (" +
+        String crear_tbNotificacion = "CREATE TABLE "+TABLE_NOTIFICACION+" (" +
                 "ID INTEGER PRIMARY KEY NOT NULL, " +
                 "Tipo INTEGER NOT NULL, " +
                 "Titulo TEXT NOT NULL," +
                 "Descripcion TEXT NOT NULL," +
                 "Estado INTEGER NOT NULL)";
+
+        String crear_tbRegistro = "CREATE TABLE "+TABLE_REGISTRO+" (" +
+                "ID INTEGER PRIMARY KEY NOT NULL, " +
+                "Fecha TEXT NOT NULL, " +
+                "Temperatura_Suelo INTEGER NOT NULL," +
+                "Temperatura_Aire INTEGER NOT NULL," +
+                "Humedad_Suelo INTEGER NOT NULL," +
+                "Humedad_Aire INTEGER NOT NULL," +
+                "Luminosidad INTEGER NOT NULL)";
 
         public SQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
@@ -178,6 +207,7 @@ public class ConexionSQLite {
             db.execSQL(crear_tbUsuario);
             db.execSQL(crear_tbSesion);
             db.execSQL(crear_tbNotificacion);
+            db.execSQL(crear_tbRegistro);
             //Activar las foreign Keys
             db.execSQL("PRAGMA foreign_keys=ON");
         }
@@ -188,10 +218,12 @@ public class ConexionSQLite {
             db.execSQL("DROP TABLE IF EXISTS "+TABLE_USUARIO);
             db.execSQL("DROP TABLE IF EXISTS "+TABLE_SESION);
             db.execSQL("DROP TABLE IF EXISTS "+TABLE_NOTIFICACION);
+            db.execSQL("DROP TABLE IF EXISTS "+TABLE_REGISTRO);
 
             db.execSQL(crear_tbUsuario);
             db.execSQL(crear_tbSesion);
             db.execSQL(crear_tbNotificacion);
+            db.execSQL(crear_tbRegistro);
             //Activar las foreign Keys
             db.execSQL("PRAGMA foreign_keys=ON");
         }

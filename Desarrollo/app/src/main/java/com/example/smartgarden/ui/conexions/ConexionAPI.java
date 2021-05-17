@@ -32,6 +32,7 @@ import javax.net.ssl.TrustManagerFactory;
 
 public class ConexionAPI {
     public static String TABLE_NOTIFICACION = "Notificaciones";
+    public static String TABLE_REGISTRO = "Registros";
 
     private String url;
     private Context context;
