@@ -42,7 +42,7 @@
         <item>Luminosidad</item>
     </string-array>
     <string-array name="graficas_combinada">
-        <item>Temperatura suelo vs Temperatura aire </item>
-        <item>Humedad suelo vs Humedad aire</item>
+        <item>Temperatura suelo y Temperatura aire </item>
+        <item>Humedad suelo y Humedad aire</item>
     </string-array>
 </resources>

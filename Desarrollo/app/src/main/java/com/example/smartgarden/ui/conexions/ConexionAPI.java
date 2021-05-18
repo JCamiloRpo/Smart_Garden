@@ -252,7 +252,7 @@ public class ConexionAPI {
 
             url.setRequestProperty("User-Agent", "Test");
             //url.setRequestProperty("Connection", "close");
-            url.setConnectTimeout(10000);
+            url.setConnectTimeout(1500);
             url.connect();
             return (url.getResponseCode() == HttpURLConnection.HTTP_OK);
         } catch (Exception e) {

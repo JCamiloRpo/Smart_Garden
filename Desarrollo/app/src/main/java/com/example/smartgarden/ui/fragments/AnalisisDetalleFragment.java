@@ -101,7 +101,10 @@ public class AnalisisDetalleFragment extends Fragment {
 
     private void graficaIndividual(int opcion){
         //Agregar dataset
-        chtIndividual.setData(new LineData(analisis.getLineData().getDataSets().get(opcion)));
+        LineDataSet dataSet = (LineDataSet) analisis.getLineData().getDataSets().get(opcion);
+        dataSet.setLineWidth(10);
+        dataSet.setDrawValues(true);
+        chtIndividual.setData(new LineData(dataSet));
 
         chtIndividual.animateY(2000, Easing.EaseInOutCubic);
         chtIndividual.invalidate();
@@ -134,6 +137,10 @@ public class AnalisisDetalleFragment extends Fragment {
         LineDataSet dataSet1 = (LineDataSet) analisis.getLineData().getDataSets().get(opcion),
                     dataSet2 = (LineDataSet) analisis.getLineData().getDataSets().get(opcion+1);
 
+        dataSet1.setLineWidth(10);
+        dataSet1.setDrawValues(true);
+        dataSet2.setLineWidth(10);
+        dataSet2.setDrawValues(true);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(dataSet1);
